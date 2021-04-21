@@ -1,0 +1,66 @@
+<script language="ts">
+    import PrimaryButton from '../lib/primaryButton.svelte';
+</script>
+
+<div class="container gridLayout">
+    <div class="gridItem topItem">
+        <img class="bottomImage" alt="minklogo" src="/MinkLogo.svg"/>
+    </div>
+    <div class="gridItem bottomArea flex">
+        <div class="flex buttonLabel">
+            <h1 class="wText">Welcome</h1>
+            <p class="wSub">Please press start to setup mink and get learning!</p>
+        </div>
+        <div>
+            <PrimaryButton message={"Start"}/>
+        </div>
+    </div>
+</div>
+
+<style>
+.gridLayout {
+    display: grid;
+    grid-template-rows: 1fr 0.4fr;
+}
+
+.gridItem {
+    grid-column: 1;
+}
+
+.bottomImage {
+    align-self: flex-end;
+    margin-bottom: 2rem;
+}
+
+.bottomArea {
+    padding: 1rem;
+    padding-top: 0;
+    gap: 1rem;
+    flex-direction: column;
+    align-self: flex-end;
+    margin-bottom: 1rem;
+}
+
+.topItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wText {
+    font-weight: 400;
+}
+
+.wSub {
+    color: #838383;
+    text-align: center;
+    width: 100%;
+    max-width: 80%;
+}
+
+.buttonLabel {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+</style>
