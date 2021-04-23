@@ -21,7 +21,6 @@ module.exports = {
 			hooks: 'src/hooks',
 			lib: 'src/lib',
 			routes: 'src/routes',
-			serviceWorker: 'src/service-worker',
 			template: 'src/app.html'
 		},
 		vite: {
