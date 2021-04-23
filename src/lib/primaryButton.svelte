@@ -1,9 +1,10 @@
 <script language="ts">
+    import {goto} from '$app/navigation';
     export let message;
-    console.log(message)
+    export let to;
 </script>
 
-<button class="primaryButton">{message}</button>
+<button on:click={() => goto(to)} class="primaryButton">{message}</button>
 
 <style>
 .primaryButton {

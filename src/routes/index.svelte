@@ -1,21 +1,24 @@
 <script language="ts">
     import PrimaryButton from '../lib/primaryButton.svelte';
-</script>
+    import TransitionWrapper from '../lib/transitionWrapper.svelte';
+</script>   
 
-<div class="container gridLayout">
-    <div class="gridItem topItem">
-        <img class="bottomImage" alt="minklogo" src="/MinkLogo.svg"/>
-    </div>
-    <div class="gridItem bottomArea flex">
-        <div class="flex buttonLabel">
-            <h1 class="wText">Welcome</h1>
-            <p class="wSub">Please press start to setup mink and get learning!</p>
+<TransitionWrapper>
+    <div class="container gridLayout">
+        <div class="gridItem topItem">
+            <img class="bottomImage" alt="minklogo" src="/MinkLogo.svg"/>
         </div>
-        <div>
-            <PrimaryButton message={"Start"}/>
+        <div class="gridItem bottomArea flex">
+            <div class="flex buttonLabel">
+                <h1 class="wText">Welcome</h1>
+                <p class="wSub">Please press start to setup mink and get learning!</p>
+            </div>
+            <div>
+                <PrimaryButton to={"/setup"} message={"Start"}/>
+            </div>
         </div>
     </div>
-</div>
+</TransitionWrapper>
 
 <style>
 .gridLayout {
