@@ -24,6 +24,8 @@
 .gridLayout {
     display: grid;
     grid-template-rows: 1fr 0.4fr;
+    position: fixed;
+    overflow: hidden;
 }
 
 .gridItem {

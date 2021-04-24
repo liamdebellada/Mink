@@ -23,3 +23,8 @@ p {
 .fhc {
     align-items: center;
 }
+
+.noscroll {
+    overflow: hidden;
+    position: absolute;
+}

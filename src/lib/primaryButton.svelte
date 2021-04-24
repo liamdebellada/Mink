@@ -8,6 +8,7 @@
 
 <style>
 .primaryButton {
+    transition: 1s ease-in;
     background: #6E5FB4;
     color: white;
     border: none;
