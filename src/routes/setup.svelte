@@ -4,29 +4,17 @@
     import FormRow from '../lib/formRow.svelte'
     import AccessibilityOptions from '../lib/accessibilityOptions.svelte'
     import PrimaryButton from '$lib/primaryButton.svelte'
-
-    import {usersStore} from '../stores/user'
-    import {onMount} from 'svelte'
-
-    const handleSetup = (data) => {
+    
+    const handleSetup = async (data) => {
         const forminfo: FormData  = new FormData(data.target)
+        var existingUsers = JSON.parse(localStorage.getItem('users'))
 
-        $usersStore = [...$usersStore, Object.fromEntries(forminfo.entries())]
-
-        usersStore.set(localStorage.getItem("users") || [])
-
-        usersStore.subscribe(value => {
-            localStorage.setItem("users", JSON.stringify(value))
-        })
-        // usersStore.persist()
-
-
-        // if (users != null) {
-        //     let existing = JSON.parse(users)
-        //     existing.push(JSON.stringify(Object.fromEntries(forminfo.entries())))
-        // } else {
-        //     localStorage.setItem('users', `[${JSON.stringify(Object.fromEntries(forminfo.entries()))}]`)
-        // }
+        if (!existingUsers) {
+            localStorage.setItem('users', JSON.stringify([Object.fromEntries(forminfo.entries())]))
+        } else {
+            existingUsers.push(Object.fromEntries(forminfo.entries()))
+            localStorage.setItem('users', JSON.stringify(existingUsers))
+        }
     }
 </script>
 

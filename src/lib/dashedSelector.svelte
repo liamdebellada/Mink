@@ -1,5 +1,5 @@
 <script lang="typescript">
-    import {usersStore} from '../stores/user'
+    import { userStore } from '../stores/user'
     import {slide} from 'svelte/transition'
     import {onMount} from 'svelte'
 
@@ -29,7 +29,7 @@
 </button>
 {#if show}
     <div transition:slide class="absoluteSelectorList">
-        {#each $usersStore as user} 
+        {#each $userStore as user} 
             <div>{user['name']}</div>
         {/each}
     </div>
