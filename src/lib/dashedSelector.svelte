@@ -1,25 +1,15 @@
 <script lang="typescript">
-    import { userStore } from '../stores/user'
     import {slide} from 'svelte/transition'
     import {onMount} from 'svelte'
 
+    let users = [];
 
-    interface userObject {
-        name: String,
-        age: Number
-    }
+    onMount(() => {
+        users = JSON.parse(localStorage.getItem('users'))
+    })
+
 
     let show = false;
-    let users: Array<userObject> = [
-        {   
-            "name" : "Liam",
-            "age" : 9   
-        },
-        {   
-            "name" : "Eitan",
-            "age" : 9   
-        }
-    ]
 </script>
 
 <div>
@@ -29,7 +19,7 @@
 </button>
 {#if show}
     <div transition:slide class="absoluteSelectorList">
-        {#each $userStore as user} 
+        {#each users as user} 
             <div>{user['name']}</div>
         {/each}
     </div>
