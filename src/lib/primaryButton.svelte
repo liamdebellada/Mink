@@ -2,9 +2,10 @@
     import {goto} from '$app/navigation';
     export let message;
     export let to;
+    export let formSelector;
 </script>
 
-<button on:click={() => goto(to)} class="primaryButton">{message}</button>
+<button form={formSelector ? formSelector : ""} on:click={() => goto(to)} class="primaryButton">{message}</button>
 
 <style>
 .primaryButton {

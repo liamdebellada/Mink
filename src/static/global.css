@@ -1,5 +1,10 @@
 body {
     font-family: 'Oxygen', sans-serif !important;
+    background: url('/math.svg');
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: bottom;
+    background-size: 40vh;
 }
 
 h1 {

@@ -5,16 +5,35 @@
     import AccessibilityOptions from '../lib/accessibilityOptions.svelte'
     import PrimaryButton from '$lib/primaryButton.svelte'
 
+    import {usersStore} from '../stores/user'
+    import {onMount} from 'svelte'
+
     const handleSetup = (data) => {
         const forminfo: FormData  = new FormData(data.target)
-        console.log(Object.fromEntries(forminfo.entries()))
+
+        $usersStore = [...$usersStore, Object.fromEntries(forminfo.entries())]
+
+        usersStore.set(localStorage.getItem("users") || [])
+
+        usersStore.subscribe(value => {
+            localStorage.setItem("users", JSON.stringify(value))
+        })
+        // usersStore.persist()
+
+
+        // if (users != null) {
+        //     let existing = JSON.parse(users)
+        //     existing.push(JSON.stringify(Object.fromEntries(forminfo.entries())))
+        // } else {
+        //     localStorage.setItem('users', `[${JSON.stringify(Object.fromEntries(forminfo.entries()))}]`)
+        // }
     }
 </script>
 
 <TransitionWrapper>
     <div class="parent">
         <div class="formHeader">
-            <BackButton/>
+            <BackButton to="/"/>
             <p class="headerText">Setup</p>
         </div>
         <div class="formBody parent">
@@ -50,7 +69,7 @@
 
             </form>
             <div class="bottomArea">
-                <PrimaryButton form="setupForm" message="Finish"/>
+                <PrimaryButton formSelector="setupForm" to="/home" message="Finish"/>
             </div>
         </div>
     </div>
