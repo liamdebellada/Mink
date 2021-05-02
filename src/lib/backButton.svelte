@@ -1,9 +1,9 @@
 <script language="ts">
-    import {goto} from '$app/navigation';
+    import {push} from 'svelte-spa-router'
     export let to = '/';
 </script>
 
-<button class="back" on:click={() => goto(to)}>
+<button class="back" on:click={() => push(to)}>
     <img class="icon" alt="back" src="/back.svg"/>
 </button>
 

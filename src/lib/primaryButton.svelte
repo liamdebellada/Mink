@@ -1,11 +1,11 @@
 <script language="ts">
-    import {goto} from '$app/navigation';
+    import {push} from 'svelte-spa-router'
     export let message;
     export let to;
     export let formSelector;
 </script>
 
-<button form={formSelector ? formSelector : ""} on:click={() => goto(to)} class="primaryButton">{message}</button>
+<button form={formSelector ? formSelector : ""} on:click={() => push(to)} class="primaryButton">{message}</button>
 
 <style>
 .primaryButton {

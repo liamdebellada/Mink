@@ -3,7 +3,7 @@
     import BackButton from '../lib/backButton.svelte'
     import FormRow from '../lib/formRow.svelte'
     import AccessibilityOptions from '../lib/accessibilityOptions.svelte'
-    import PrimaryButton from '$lib/primaryButton.svelte'
+    import PrimaryButton from '../lib/primaryButton.svelte'
     
     const handleSetup = async (data) => {
         const forminfo: FormData  = new FormData(data.target)

@@ -1,7 +1,7 @@
 <script lang="typescript">
     import TransitionWrapper from '../lib/transitionWrapper.svelte'
     import DashedSelector from '../lib/dashedSelector.svelte'
-import PrimaryButton from '$lib/primaryButton.svelte'
+    import PrimaryButton from '../lib/primaryButton.svelte'
 
     interface option {
         icon: string,
