@@ -17,9 +17,9 @@
 			push('/')
 		}
 
-		if (unsetRoutes.includes(route) && keys.length > 0) {
-			push('/home')
-		}
+		// if (unsetRoutes.includes(route) && keys.length > 0) {
+		// 	push('/home')
+		// }
 	})
 
 </script>

@@ -34,6 +34,7 @@
         background: #F0F0F0;
         border-radius: 1.2rem;
         height: 5vh;
+        min-height: 1.9rem;
         max-height: 45px;
         padding-left: 2rem;
     }

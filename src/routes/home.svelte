@@ -31,17 +31,17 @@
 
     let options: Array<option> = [
         {
-            icon: "clock",
+            icon: "schedule",
             route: "/history",
             color: 'E1D6FF'
         },
         {
-            icon: "user",
+            icon: "person_outline",
             route: "/me",
             color: 'FEF3D5'
         },
         {
-            icon: "multi",
+            icon: "groups",
             route: "/multi",
             color: 'F8E9F1'
         },
@@ -55,66 +55,80 @@
 </script>
 
 <TransitionWrapper>
-    <div class="formHeader">
-        <DashedSelector/>
-        <p></p>
-    </div>
-    <div class="mainContent">
-        <div class="homeContent">
-            <p class="helloName">{activeUserData['name']}</p>
+    <div class="parent">
+        <div class="header">
+            <DashedSelector/>
+        </div>
+        <div class="userContent">
+            <p class="helloName">Hi {activeUserData['name']}</p>
             <div class="hsContainer">
                 <p>High Score</p>
                 <p>{activeUserData['recentGames'] ? activeUserData['recentGames'].sort((x,y) => parseInt(y.score) - parseInt(x.score))[0].score : 0}</p>
             </div>
+        </div>
+        <div class="optionContent">
             <div class="optionList">
                 {#each options as option}
-                    <div style="background: #{option['color']}" class="option">
+                    <div style="background: #{option['color']}" class="option material-icons">
                         {option['icon']}
                     </div>
                 {/each}
             </div>
         </div>
-    </div>
-    <div class="rcContainer">
-        <p class="rcTitle">Recent games</p>
-        <div class="hScroll">
-            {#if activeUserData['recentGames']}
-                {#each activeUserData['recentGames'] as hi}
-                    <div class="hItem">
-                        <div class="hHeader">
-                            <p>clock</p>
-                            <p class="hDate">{hi['date'].split("T")[0]}</p>
+        <div class="scoresContent">
+            <p class="rcTitle">Recent games</p>
+            <div class="hScroll">
+                {#if activeUserData['recentGames']}
+                    {#each activeUserData['recentGames'] as hi}
+                        <div class="hItem">
+                            <div class="hHeader">
+                                <p class="timeIcon material-icons">schedule</p>
+                                <p class="hDate">{hi['date'].split("T")[0]}</p>
+                            </div>
+                            <div class="hBody">
+                                {hi['score']}
+                            </div>
                         </div>
-                        <div class="hBody">
-                            {hi['score']}
-                        </div>
-                    </div>
-                {/each}
-            {/if}
+                    {/each}
+                {:else}
+                    <div>start</div>
+                {/if}
+            </div>
         </div>
-        <div class="bottomButton">
-            <PrimaryButton message="Play" to="/play" />
+        <div class="buttonContent">
+            <PrimaryButton message="Play" to="/play"/>
         </div>
     </div>
 </TransitionWrapper>
 
 <style>
-    .mainContent {
+
+    .header {
         padding: 1rem;
     }
 
-    .homeContent {
-        padding-top: 0;
+    .parent {
+        display: grid;
         height: 100%;
+        grid-template-rows: 0.1fr auto auto 0.8fr 0.2fr;
     }
 
-    .formHeader {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        padding: 1rem;
-        padding-top: 4vh;
+    .userContent {
+        padding: 0 1rem 0 1rem;
+    }
+
+    .optionContent {
+        padding: 1rem 1rem 0 1rem;
+    }
+
+    .scoresContent {
+        display: grid;
+        max-height: 330px;
+        grid-template-rows: 0.1fr auto;
+    }
+
+    .buttonContent {
+        padding: 0 2rem 0 2rem;
     }
 
     .helloName {
@@ -125,8 +139,8 @@
         margin-top: 1rem;
         background: #6E5FB4;
         border-radius: 1rem;
-        height: 10vh;
         min-height: 66px;
+        max-height: 3rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -146,25 +160,21 @@
     .optionList {
         width: 100%;
         justify-content: space-between;
-        margin-top: 1rem;
         display: flex;
+        padding-top: 0;
+        box-sizing: border-box;
     }
 
     .option {
+        font-size: 1.8rem;
         height: 4rem;
         width: 4rem;
         border-radius: 50%;
-        background: red;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .rcContainer {
-        height: 100%;
-        width: 100%;
-        overflow-x: auto;
-    }
 
     .rcTitle {
         font-size: 1.1rem;
@@ -172,18 +182,18 @@
     }
 
     .hScroll {
-        padding-bottom: 1rem;
+        height: 100%;
         overflow-x: scroll;
-        height: 30vh;
         display: flex;
         flex-direction: row;
     }
 
     .hItem {
+        margin-bottom: 1rem;
         background: white;
         box-shadow: 0px 8px 14px -3px rgba(0, 0, 0, 0.25);
         border-radius: 1rem;
-        min-width: 10rem;
+        min-width: 11rem;
         margin-left: 1rem;
         display: grid;
         grid-template-rows: auto 1fr;
@@ -205,7 +215,12 @@
     }
 
     .hBody {
-        font-size: 1.6rem;
+        font-size: 2rem;
+    }
+
+    .timeIcon {
+        color: #6E5FB4;
+        font-size: 2.5rem;
     }
 
     .hDate {
@@ -213,11 +228,4 @@
         color: #808080;
     }
 
-    .bottomButton {
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-        padding: 1rem;
-        box-sizing: border-box;
-    }
 </style>

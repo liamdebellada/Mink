@@ -19,18 +19,18 @@
     let show = false;
 </script>
 
-<div>
+<div style="height: min-content;">
 
-<button class="btnWrapper" on:click={() => show = show == true ? false : true}>
-    <img class="icon" alt="users" src="/userSelector.svg"/>
-</button>
-{#if show}
-    <div transition:slide class="absoluteSelectorList">
-        {#each users as user} 
-            <div class="{$userStore == user ? 'active' : ''}" on:click={() => changeUser(user)}>{user.replace(/"/g, ' ')}</div>
-        {/each}
-    </div>
-{/if}
+    <button class="btnWrapper" on:click={() => show = show == true ? false : true}>
+        <img class="icon" alt="users" src="/userSelector.svg"/>
+    </button>
+    {#if show}
+        <div transition:slide class="absoluteSelectorList">
+            {#each users as user} 
+                <div class="{$userStore == user ? 'active' : ''}" on:click={() => changeUser(user)}>{user.replace(/"/g, ' ')}</div>
+            {/each}
+        </div>
+    {/if}
 </div>
 <style>
     .btnWrapper {
