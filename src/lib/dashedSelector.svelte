@@ -1,13 +1,20 @@
 <script lang="typescript">
     import {slide} from 'svelte/transition'
     import {onMount} from 'svelte'
+    import { userStore } from '../stores/user'
 
     let users = [];
+    import { Plugins } from '@capacitor/core';
+    const { Storage } = Plugins;
 
-    onMount(() => {
-        users = JSON.parse(localStorage.getItem('users'))
+    onMount(async () => {
+        const { keys } = await Storage.keys();
+        users = keys
     })
 
+    const changeUser = (key) => {
+        userStore.set(key)
+    }
 
     let show = false;
 </script>
@@ -20,7 +27,7 @@
 {#if show}
     <div transition:slide class="absoluteSelectorList">
         {#each users as user} 
-            <div>{user['name']}</div>
+            <div class="{$userStore == user ? 'active' : ''}" on:click={() => changeUser(user)}>{user.replace(/"/g, ' ')}</div>
         {/each}
     </div>
 {/if}
@@ -47,5 +54,9 @@
         border-radius: 0 1.6rem 0 1.6rem;
         position: absolute;
         z-index: 999;
+    }
+
+    .active {
+        color: red;
     }
 </style>

@@ -4,18 +4,39 @@
     import FormRow from '../lib/formRow.svelte'
     import AccessibilityOptions from '../lib/accessibilityOptions.svelte'
     import PrimaryButton from '../lib/primaryButton.svelte'
+
+    import {push} from 'svelte-spa-router';
+
+    import * as yup from 'yup';
+
+    let schema = yup.object().shape({
+        name: yup.string().required('Name cannot be empty.').strict(true),
+        age: yup.number().required('Age cannot be empty.').positive().integer().min(9, 'You must be over 9 to play.').max(10, 'You must be under 11 to play').typeError('Age must be a number'),
+        difficulty: yup.number().min(1).max(3).required('Difficulty cannot be empty.').typeError('Difficulty must be a number'),
+        cb: yup.string(),
+        hi: yup.string(),
+        lv: yup.string()
+    });
+
     
+    import { Plugins } from '@capacitor/core';
+    const { Storage } = Plugins;
+
+    let formErrors = [];
+
     const handleSetup = async (data) => {
         const forminfo: FormData  = new FormData(data.target)
-        var existingUsers = JSON.parse(localStorage.getItem('users'))
-
-        if (!existingUsers) {
-            localStorage.setItem('users', JSON.stringify([Object.fromEntries(forminfo.entries())]))
-        } else {
-            existingUsers.push(Object.fromEntries(forminfo.entries()))
-            localStorage.setItem('users', JSON.stringify(existingUsers))
-        }
+        schema.validate(Object.fromEntries(forminfo.entries()), { abortEarly: false }).then(async (valid) => {
+            await Storage.set({
+                key: JSON.stringify(valid.name),
+                value: JSON.stringify(valid)
+            });
+            push('/home')
+        }).catch((err) => {
+            formErrors = err.inner
+        })
     }
+
 </script>
 
 <TransitionWrapper>
@@ -29,35 +50,41 @@
                 <FormRow options={{
                     label: "Child's name",
                     placeHolder: 'Enter name',
-                    i: 'name'
+                    i: 'name',
+                    errors: formErrors
                 }}/>
                 <FormRow options={{
                     label: "Child's age",
                     placeHolder: 'Enter age',
-                    i: 'age'
+                    i: 'age',
+                    errors: formErrors
                 }}/>
                 <FormRow options={{
                     label: "Difficulty",
                     placeHolder: '1-3',
-                    i: 'difficulty'
+                    i: 'difficulty',
+                    errors: formErrors
                 }}/>
                 <div class="accessList">Accessibility</div>
                 <AccessibilityOptions options={{
                     label: 'Colour blindness',
-                    i: 'cb'
+                    i: 'cb',
+                    errors: formErrors
                 }}/>
                 <AccessibilityOptions options={{
                     label: 'Hearing issues',
-                    i: 'hi'
+                    i: 'hi',
+                    errors: formErrors
                 }}/>
                 <AccessibilityOptions options={{
                     label: 'Low vision',
-                    i: 'lv'
+                    i: 'lv',
+                    errors: formErrors
                 }}/>
 
             </form>
             <div class="bottomArea">
-                <PrimaryButton formSelector="setupForm" to="/home" message="Finish"/>
+                <PrimaryButton formSelector="setupForm" message="Finish"/>
             </div>
         </div>
     </div>

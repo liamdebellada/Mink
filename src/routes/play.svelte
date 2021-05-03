@@ -1,7 +1,7 @@
 <script>
     import TransitionWrapper from '../lib/transitionWrapper.svelte'
     import {push} from 'svelte-spa-router'
-
+    
     class game {
         constructor(config, difficulty) {
             this.config = config;
@@ -22,17 +22,11 @@
 
         tick() {
             if (time === 0) {
-                if (round < 10) {
-                    clearInterval(gameInstance.timerInstance)
-                    time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000
-                    round ++;
-                    question = gameInstance.generateQuestion()
-                    return;
-                } else {
-                    clearInterval(gameInstance.timerInstance)
-                    push(`/gameover/${score}`)
-                    return;
-                }
+                clearInterval(gameInstance.timerInstance)
+                time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000
+                round ++;
+                question = gameInstance.generateQuestion()
+                return
             }
             time = time - 1
         }
@@ -60,17 +54,18 @@
         }
 
         handleCorrect() {
-            score ++;
-            userAnswer = '';
-            clearInterval(this.timerInstance)
-            time = this.config.timeLimits[this.difficulty] / 1000
+            clearInterval(gameInstance.timerInstance)
+            time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000
             round ++;
-            question = this.generateQuestion()
+            score ++;
+            question = gameInstance.generateQuestion()
+            userAnswer = '';
         }
     }
 
+    let round = 1;
     let gameInstance = new game({
-        timeLimits : [-1, 20000, 1000],
+        timeLimits : [-1, 20000, 10000],
         operators: ["+", "-", "/", "*"],
         maxRound: 10
     }, 2)
@@ -79,8 +74,11 @@
     let question = gameInstance.generateQuestion()
     let time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000;
     let score = 0;
-    let round = 1;
     let userAnswer = '';
+
+    $: if (round > gameInstance.config.maxRound) {
+        push(`/gameover/${score}`)
+    }
 
     const handleKeyPad = (key) => {
         if (key != "del") {

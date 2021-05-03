@@ -3,6 +3,26 @@
     import DashedSelector from '../lib/dashedSelector.svelte'
     import PrimaryButton from '../lib/primaryButton.svelte'
 
+    let activeUserData = {};
+
+    import {onMount} from 'svelte'
+
+    import {userStore} from '../stores/user'
+    import { Plugins } from '@capacitor/core';
+    const { Storage } = Plugins;
+
+    onMount(async () => {
+        const { keys } = await Storage.keys()
+        userStore.subscribe(async (activeUser) => {
+             if (activeUser) {
+                const {value} = await Storage.get({key: activeUser})
+                activeUserData = JSON.parse(value);
+            } else {
+                userStore.set(keys[0])
+            }
+        })
+    })
+
     interface option {
         icon: string,
         route: string,
@@ -41,10 +61,10 @@
     </div>
     <div class="mainContent">
         <div class="homeContent">
-            <p class="helloName">Hi Jackson</p>
+            <p class="helloName">{activeUserData['name']}</p>
             <div class="hsContainer">
                 <p>High Score</p>
-                <p>49</p>
+                <p>{activeUserData['recentGames'] ? activeUserData['recentGames'].sort((x,y) => parseInt(y.score) - parseInt(x.score))[0].score : 0}</p>
             </div>
             <div class="optionList">
                 {#each options as option}
@@ -58,17 +78,19 @@
     <div class="rcContainer">
         <p class="rcTitle">Recent games</p>
         <div class="hScroll">
-            {#each [1,2,3,4,5] as hi}
-                <div class="hItem">
-                    <div class="hHeader">
-                        <p>clock</p>
-                        <p class="hDate">10/12/20</p>
+            {#if activeUserData['recentGames']}
+                {#each activeUserData['recentGames'] as hi}
+                    <div class="hItem">
+                        <div class="hHeader">
+                            <p>clock</p>
+                            <p class="hDate">{hi['date'].split("T")[0]}</p>
+                        </div>
+                        <div class="hBody">
+                            {hi['score']}
+                        </div>
                     </div>
-                    <div class="hBody">
-                        49
-                    </div>
-                </div>
-            {/each}
+                {/each}
+            {/if}
         </div>
         <div class="bottomButton">
             <PrimaryButton message="Play" to="/play" />
