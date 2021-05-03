@@ -1,7 +1,9 @@
 <script>
     import TransitionWrapper from '../lib/transitionWrapper.svelte'
     import {push} from 'svelte-spa-router'
-    
+
+    export let params = {};
+
     class game {
         constructor(config, difficulty) {
             this.config = config;
@@ -68,7 +70,7 @@
         timeLimits : [-1, 20000, 10000],
         operators: ["+", "-", "/", "*"],
         maxRound: 10
-    }, 0)
+    }, parseInt(params.difficulty))
 
 
     let question = gameInstance.generateQuestion()

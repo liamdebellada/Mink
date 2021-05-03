@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="buttonContent">
-            <PrimaryButton message="Play" to="/play"/>
+            <PrimaryButton message="Play" to="/play/{activeUserData['difficulty']}"/>
         </div>
     </div>
 </TransitionWrapper>

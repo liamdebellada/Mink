@@ -27,7 +27,7 @@
 	'/' : Index,
 	'/setup' : Setup,
 	'/home' : Home,
-	'/play' : Play,
+	'/play/:difficulty' : Play,
 	'/gameover/:score' : GameOver
 }}/>
    

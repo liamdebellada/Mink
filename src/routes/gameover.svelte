@@ -6,16 +6,18 @@
     import PrimaryButton from '../lib/primaryButton.svelte'
     import {push} from 'svelte-spa-router';
     import BackButton from '../lib/backButton.svelte';
-import TransitionWrapper from '../lib/transitionWrapper.svelte';
+    import TransitionWrapper from '../lib/transitionWrapper.svelte';
     const { Storage } = Plugins;
 
     export let params = {};
-    console.log(params)
+
+    let restartDiff = 0;
 
     onMount(async () => {
         if ($userStore) { 
             var {value} = await Storage.get({key: $userStore})
             value = JSON.parse(value)
+            restartDiff = value.difficulty
             if (value.recentGames) {
                 value.recentGames.push({date: new Date(), score: params.score})
             } else {
@@ -36,7 +38,7 @@ import TransitionWrapper from '../lib/transitionWrapper.svelte';
             <h1 class="gameOverText">Score: {params.score}</h1>
         </div>
         <div class="buttonContainer">
-            <PrimaryButton to="/play" message="restart"/>
+            <PrimaryButton to="/play/{restartDiff}" message="restart"/>
         </div>
     </div>
 </TransitionWrapper>
