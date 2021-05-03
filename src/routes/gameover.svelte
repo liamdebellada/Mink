@@ -3,6 +3,7 @@
     import {userStore} from '../stores/user'
     import { Plugins } from '@capacitor/core';
     import { onMount } from 'svelte';
+    import {push} from 'svelte-spa-router';
     const { Storage } = Plugins;
 
     export let params = {};
@@ -23,3 +24,4 @@
 </script>
 
 <p>game over! score: {params.score}</p>
+<button on:click={() => push('/home')}>home 4 bruno</button>

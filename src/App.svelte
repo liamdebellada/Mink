@@ -16,6 +16,10 @@
 		if (!unsetRoutes.includes(route) && keys.length < 1) {
 			push('/')
 		}
+
+		if (unsetRoutes.includes(route) && keys.length > 0) {
+			push('/home')
+		}
 	})
 
 </script>

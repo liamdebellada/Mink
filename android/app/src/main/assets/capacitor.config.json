@@ -1,6 +1,6 @@
 {
   "appId": "com.test.app",
-  "appName": "test",
+  "appName": "Mink",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "public",
