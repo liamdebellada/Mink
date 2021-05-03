@@ -91,7 +91,7 @@
                         </div>
                     {/each}
                 {:else}
-                    <div>start</div>
+                    <div class="getStarted">Tap play to get started!</div>
                 {/if}
             </div>
         </div>
@@ -102,6 +102,16 @@
 </TransitionWrapper>
 
 <style>
+
+    .getStarted {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: grey;
+        font-size: 2rem;
+        text-align: center;
+    }
 
     .header {
         padding: 1rem;

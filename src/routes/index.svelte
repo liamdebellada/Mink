@@ -40,7 +40,6 @@
 .bottomArea {
     padding: 1rem;
     padding-top: 0;
-    gap: 1rem;
     flex-direction: column;
     align-self: flex-end;
     margin-bottom: 1rem;
@@ -57,6 +56,8 @@
 }
 
 .wSub {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
     color: #838383;
     text-align: center;
     width: 100%;
@@ -67,5 +68,9 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.buttonLabel h1 {
+    margin-bottom: 0.2rem;
 }
 </style>

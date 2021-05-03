@@ -68,7 +68,7 @@
         timeLimits : [-1, 20000, 10000],
         operators: ["+", "-", "/", "*"],
         maxRound: 10
-    }, 2)
+    }, 0)
 
 
     let question = gameInstance.generateQuestion()
