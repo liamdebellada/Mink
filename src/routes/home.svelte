@@ -3,6 +3,12 @@
     import DashedSelector from '../lib/dashedSelector.svelte'
     import PrimaryButton from '../lib/primaryButton.svelte'
 
+    // let test = new Audio('/boing.wav')
+
+    const handleSound = () => {
+        new Audio('/boing.wav').play()
+    }
+
     let activeUserData = {};
 
     import {onMount} from 'svelte'
@@ -61,7 +67,7 @@
         </div>
         <div class="userContent">
             <p class="helloName">Hi {activeUserData['name']}</p>
-            <div class="hsContainer">
+            <div on:click={handleSound} class="hsContainer">
                 <p>High Score</p>
                 <p>{activeUserData['recentGames'] ? activeUserData['recentGames'].sort((x,y) => parseInt(y.score) - parseInt(x.score))[0].score : 0}</p>
             </div>

@@ -24,6 +24,7 @@
 
         tick() {
             if (time === 0) {
+                new Audio('/error.wav').play()
                 clearInterval(gameInstance.timerInstance)
                 time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000
                 round ++;
@@ -56,6 +57,7 @@
         }
 
         handleCorrect() {
+            new Audio('/success.wav').play()
             clearInterval(gameInstance.timerInstance)
             time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000
             round ++;
