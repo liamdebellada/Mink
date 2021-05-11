@@ -1,6 +1,13 @@
 <script>
     import TransitionWrapper from '../lib/transitionWrapper.svelte'
     import {push} from 'svelte-spa-router'
+    import {onMount} from 'svelte'
+
+    onMount(() => {
+        return () => {
+            clearInterval(gameInstance.timerInstance)
+        }
+    })
 
     export let params = {};
 
@@ -81,6 +88,7 @@
     let userAnswer = '';
 
     $: if (round > gameInstance.config.maxRound) {
+        clearInterval(gameInstance.timerInstance)
         push(`/gameover/${score}`)
     }
 

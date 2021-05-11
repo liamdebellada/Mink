@@ -10,8 +10,8 @@
     import * as yup from 'yup';
 
     let schema = yup.object().shape({
-        name: yup.string().required('Name cannot be empty.').strict(true),
-        age: yup.number().required('Age cannot be empty.').positive().integer().min(9, 'You must be over 9 to play.').max(10, 'You must be under 11 to play').typeError('Age must be a number'),
+        name: yup.string().required('Name cannot be empty.').strict(true).test('name', 'Name must only have letters', (str) => RegExp(/\d/).test(str) ? false : true),
+        age: yup.number().required('Age cannot be empty.').positive().integer().min(1, 'You must be born to play.').max(10, 'You must be under 11 to play').typeError('Age must be a number'),
         difficulty: yup.number().min(1).max(3).required('Difficulty cannot be empty.').typeError('Difficulty must be a number'),
         cb: yup.string(),
         hi: yup.string(),
