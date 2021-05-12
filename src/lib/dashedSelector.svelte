@@ -57,6 +57,6 @@
     }
 
     .active {
-        color: red;
+         font-weight: 700;
     }
 </style>
