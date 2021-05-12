@@ -34,6 +34,7 @@
                 new Audio('/error.wav').play()
                 clearInterval(gameInstance.timerInstance)
                 time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000
+                userAnswer = '';
                 round ++;
                 question = gameInstance.generateQuestion()
                 return
