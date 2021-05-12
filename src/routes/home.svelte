@@ -15,14 +15,17 @@
 
     import {userStore} from '../stores/user'
     import { Plugins } from '@capacitor/core';
+import { validate_each_argument } from 'svelte/internal';
+import { push } from 'svelte-spa-router';
     const { Storage } = Plugins;
 
     onMount(async () => {
         const { keys } = await Storage.keys()
         userStore.subscribe(async (activeUser) => {
              if (activeUser) {
-                const {value} = await Storage.get({key: activeUser})
+                const {value}: any = await Storage.get({key: activeUser})
                 activeUserData = JSON.parse(value);
+                localDiff = (activeUserData as any).difficulty
             } else {
                 userStore.set(keys[0])
             }
@@ -31,32 +34,39 @@
 
     interface option {
         icon: string,
-        route: string,
+        route?: string,
         color: string
     }
 
     let options: Array<option> = [
         {
-            icon: "schedule",
-            route: "/history",
+            icon: "1",
             color: 'E1D6FF'
         },
         {
-            icon: "person_outline",
-            route: "/me",
+            icon: "2",
             color: 'FEF3D5'
         },
         {
-            icon: "groups",
-            route: "/multi",
+            icon: "3",
             color: 'F8E9F1'
         },
         {
-            icon: "settings",
+            icon: "add",
             route: "/settings",
             color: 'CEEDDC'
         }
     ]
+
+    let localDiff = 1;
+
+    const handleDifficultyChange = async (diff) => {
+        var {value}: any = await Storage.get({key: $userStore})
+        value = JSON.parse(value)
+        value.difficulty = diff;
+        localDiff = diff;
+        await Storage.set({key: $userStore, value: JSON.stringify(value)})
+    }
 
 </script>
 
@@ -75,9 +85,16 @@
         <div class="optionContent">
             <div class="optionList">
                 {#each options as option}
-                    <div style="background: #{option['color']}" class="option material-icons">
+                    {#if option['route']}
+                        <div on:click={() => push('/setup')} style="background: #{option['color']}" class="option material-icons">
+                            {option['icon']}
+                        </div>
+                    {:else}
+                    <div on:click={() => handleDifficultyChange(option['icon'])} style="background: #{option['color']}; border: {option['icon'] === localDiff.toString() ? '2px solid #6E5FB4' : 'none'}" class="option">
                         {option['icon']}
                     </div>
+                    {/if}
+
                 {/each}
             </div>
         </div>
@@ -102,7 +119,7 @@
             </div>
         </div>
         <div class="buttonContent">
-            <PrimaryButton message="Play" to="/play/{activeUserData['difficulty']}"/>
+            <PrimaryButton message="Play" to="/play/{localDiff}"/>
         </div>
     </div>
 </TransitionWrapper>

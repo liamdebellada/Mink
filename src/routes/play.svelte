@@ -1,5 +1,6 @@
 <script>
     import TransitionWrapper from '../lib/transitionWrapper.svelte'
+    import BackButton from '../lib/backButton.svelte'
     import {push} from 'svelte-spa-router'
     import {onMount} from 'svelte'
 
@@ -82,7 +83,7 @@
         timeLimits : [-1, 20000, 10000],
         operators: ["+", "-", "/", "*"],
         maxRound: 10
-    }, parseInt(params.difficulty))
+    }, parseInt(params.difficulty) - 1)
 
 
     let question = gameInstance.generateQuestion()
@@ -114,6 +115,10 @@
 </script>
 
 <TransitionWrapper>
+    <div class="backContainer">
+        <BackButton to="/home"/>
+        <div>Back</div>
+    </div>
     <div class="gameInfoContainer">
         <p>Question {round}</p>
         <p>Score: {score}</p>
@@ -244,5 +249,17 @@
         border-radius: 12px;
         width: 90vw;
         height: 2rem;
+    }
+
+    .backContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        height: auto;
+        top: 0;
+        left: 0;
+        padding-left: 1rem;
+        padding-top: 1.5rem;
     }
 </style>
