@@ -64,6 +64,8 @@
         }
 
         handleCorrect() {
+            correctFlaire = 'green';
+            setTimeout(() => correctFlaire = 'transparent', 500)
             new Audio('/success.wav').play()
             clearInterval(gameInstance.timerInstance)
             time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000
@@ -86,6 +88,8 @@
     let time = gameInstance.config.timeLimits[gameInstance.difficulty] / 1000;
     let score = 0;
     let userAnswer = '';
+
+    let correctFlaire = 'transparent';
 
     $: if (round > gameInstance.config.maxRound) {
         clearInterval(gameInstance.timerInstance)
@@ -130,7 +134,7 @@
                 {userAnswer}
             </div>
         </div>
-        <div class="keypadContainer">
+        <div style="background: {correctFlaire}" class="keypadContainer">
             {#each [1,2,3,4,5,6,7,8,9,0,"del"] as key}
                 <div on:click={() => handleKeyPad(key)} class="keypadItem">
                     {key}
@@ -198,6 +202,7 @@
     }
 
     .keypadContainer {
+        transition: background 1s ease-out;
         padding: 1rem;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
