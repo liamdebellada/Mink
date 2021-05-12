@@ -4,7 +4,6 @@
     import { Plugins } from '@capacitor/core';
     import { onMount } from 'svelte';
     import PrimaryButton from '../lib/primaryButton.svelte'
-    import {push} from 'svelte-spa-router';
     import BackButton from '../lib/backButton.svelte';
     import TransitionWrapper from '../lib/transitionWrapper.svelte';
     const { Storage } = Plugins;
@@ -32,6 +31,7 @@
     <div class="parent">
         <div class="backContainer">
             <BackButton to="/home"/>
+            <div>Home</div>
         </div>
         <div class="minkContainer">
             <img alt="minkZoom" src="/mz.svg"/>
@@ -60,6 +60,9 @@
     }
 
     .backContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: absolute;
         height: auto;
         top: 0;
